@@ -1,6 +1,4 @@
 package com.example.demo.rest;
-
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +19,7 @@ public class UsuarioREST {
 
 	@PostMapping("/login")
 	Usuario login(@RequestBody Login login) {
-		System.out.print(login.getEmail());
+		//System.out.print(login.getEmail());
 		Usuario usuario = lista.stream().
 				filter(usu -> usu.getEmail().equals(login.getEmail()) && 
 						usu.getSenha().equals(login.getSenha())).
@@ -37,6 +35,7 @@ public class UsuarioREST {
 		}else {
 			usuario.setId(u.getId() + 1);
 		}
+		
 		lista.add(usuario);
 		return usuario;
 	}
@@ -58,7 +57,6 @@ public class UsuarioREST {
 	List<Usuario> obterTodosUsuarios() {
 		return lista;
 	}
-	
 	
 	@GetMapping("/usuarios/{id}")
 	public Usuario obterUsuario(@PathVariable("id") int id) {
