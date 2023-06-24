@@ -25,21 +25,20 @@ public class PedidoREST {
 	
 	@GetMapping("/pedidos")
 	List<Pedido> listarPedidos(@RequestParam(required = false) String type){
-		System.out.print(type);
+		//System.out.print(type);
 		if(type != null) {
 			List<Pedido> pedidosHome = pedidos.stream().filter(pedido -> pedido.getStatus().equals(type)).collect(Collectors.toList());
 			
 			if (!pedidosHome.isEmpty()) {
 				return pedidosHome;
 			}
-			
+
 			return null;
 		}
 		
 		return pedidos;
 	}
 	
-
 	
 	
 	static {
@@ -51,38 +50,6 @@ public class PedidoREST {
 		pedidos.add(new Pedido(5,new ArrayList<>(), 75.50, "Recolhido", LocalDate.parse("2023-09-30"), LocalDate.parse("2023-10-13"), 3));
 		pedidos.add(new Pedido(6,new ArrayList<>(), 30.00, "Finalizado", LocalDate.parse("2023-06-10"), LocalDate.parse("2023-10-13"), 4));
 		pedidos.add(new Pedido(7,new ArrayList<>(), 20.00, "Pago", LocalDate.parse("2023-07-10"), LocalDate.parse("2023-10-13"),5));
-		
-		
-		/*
-		 * 
-		 
-		 private int id;
-			private static List<ItemPedido> produtos = new ArrayList<>();
-			private double valorTotal;
-			private String status;
-			private Date data_pedido;
-			private Date prazo_final;
-			private int cliente;
-		 
-		itensPedido.add(new ItemPedido(1,"camisa", 15.6, 2, 3));
-		itensPedido.add(new ItemPedido(1,"camisa", 15.6, 2, 3 ));
-		itensPedido.add(new ItemPedido(1,"camisa", 15.6, 2, 3 ));
-		itensPedido.add(new ItemPedido(1,"camisa", 15.6, 2, 3 ));
-		itensPedido.add(new ItemPedido(1,"camisa", 15.6, 2, 3 ));
-		itensPedido.add(new ItemPedido(1,"camisa", 15.6, 2, 3 ));
-		
-		
-		
-		this.id = id;
-		this.nome = nome;
-		this.valor = valor;
-		this.prazo = prazo;
-		this.quantidade = quantidade;
-		*/
-		
-		
-		
-		
 		
 	}
 	
