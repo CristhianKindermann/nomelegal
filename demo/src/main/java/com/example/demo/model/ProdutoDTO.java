@@ -3,28 +3,28 @@ import java.io.Serializable;
 
 public class ProdutoDTO implements Serializable {
 	
-	private int id;
+	private Long id;
 	private String nome;
 	private int prazo;
-	private double valor;
+	private Float valor_unitario;
 	
 	public ProdutoDTO() {
 		super();
 	}
 	
-	public ProdutoDTO(int id, String nome,double valor, int prazo ) {
+	public ProdutoDTO(Long id, String nome,Float valor_unitario, int prazo ) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.prazo = prazo;
-		this.valor = valor;
+		this.valor_unitario = valor_unitario;
 	}
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -44,12 +44,12 @@ public class ProdutoDTO implements Serializable {
 		this.prazo = prazo;
 	}
 	
-	public double getValor() {
-		return valor;
+	public Float getValor_unitario() {
+		return valor_unitario;
 	}
 	
-	public void setValor(double valor) {
-		this.valor = valor;
+	public void setValor_unitario(Float valor_unitario) {
+		this.valor_unitario = valor_unitario;
 	}
 	
 	

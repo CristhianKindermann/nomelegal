@@ -1,9 +1,9 @@
 package com.example.demo.rest;
 
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
 import com.example.demo.model.repository.*;
 import org.springframework.stereotype.*;
 
@@ -34,19 +36,11 @@ public class ProdutoREST {
 	
 	@PostMapping("/produtos")
 	ProdutoDTO produto(@RequestBody ProdutoDTO produto) {
-//		ProdutoDTO prod = produtos.stream().max(Comparator.comparing(ProdutoDTO::getId)).orElse(null);
-//		if (prod == null) 
-//			produto.setId(1);
-//		else
-//			produto.setId(prod.getId() + 1);
-//		produtos.add(produto);
-//		return produto;
-
-		repu.save(mapper.map(produto, Produto.class));
-		
-		Produto prod = repu.findByid(
-				produto.getId());
-		return mapper.map(prod, ProdutoDTO.class);
+		//repo.save(mapper.map(produto, Produto.class));
+		Produto prod = mapper.map(produto, Produto.class);
+		repu.save(prod);
+		Produto p = repu.findById(prod.getId()).get();
+		return mapper.map(p, ProdutoDTO.class);
 	}
 
 	//busca todos os produtos
@@ -61,35 +55,44 @@ public class ProdutoREST {
 	}
 
 	@PutMapping("/produtos/{id}")
-	public ProdutoDTO alterarProduto(@PathVariable("id") int id, @RequestBody ProdutoDTO produto) {
-		ProdutoDTO p = produtos.stream().filter(prod -> prod.getId() == id).findAny().orElse(null);
-		if(p != null) {
-			p.setNome(produto.getNome());
-			p.setValor(produto.getValor());
-			p.setPrazo(produto.getPrazo());
-		}
-		return p;
+	public ResponseEntity<String> alterarProduto(@PathVariable("id") Long id, @RequestBody ProdutoDTO produtoDTO) {
+		Optional<Produto> optionalProduto = repu.findById(id);
+
+        if (optionalProduto.isPresent()) {
+            Produto produto = optionalProduto.get();
+
+            // Atualize os campos relevantes com base nos valores do ProdutoDTO
+            produto.setNome(produtoDTO.getNome());
+            produto.setValor_unitario(produtoDTO.getValor_unitario());
+            
+            repu.save(produto);
+            return ResponseEntity.ok("Produto atualizado com sucesso.");
+        }else{
+        	return ResponseEntity.notFound().build();
+        }
+        
 	}
 	
 	@DeleteMapping("/produtos/{id}")
-	public ProdutoDTO removerPorduto(@PathVariable("id") int id) {
-		ProdutoDTO produto = produtos.stream().filter(prod -> prod.getId() == id).findAny().orElse(null);
-		if(produto != null) {
-			produtos.removeIf(p-> p.getId() == id);
-		}
-		
-		return produto;
+	public ResponseEntity<String> removerPorduto(@PathVariable("id") Long id) {
+		Optional<Produto> optionalProduto = repu.findById(id);
+		if (optionalProduto.isPresent()) {
+            Produto produto = optionalProduto.get();
+            
+            repu.delete(produto);
+            
+            return ResponseEntity.ok("Produto excluído com sucesso.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
 	}
 	
 	
 	
 	
 	static {
-		produtos.add(new ProdutoDTO(1,"camiseta", 10.50, 1));
-		produtos.add(new ProdutoDTO(2,"camisa", 20.00, 3));
-		produtos.add(new ProdutoDTO(3,"calcas", 12.00, 2));
-		produtos.add(new ProdutoDTO(4,"cueca", 15.00, 1));
-		produtos.add(new ProdutoDTO(5,"meia", 9.00, 1));
+
 	
 	}
 } 

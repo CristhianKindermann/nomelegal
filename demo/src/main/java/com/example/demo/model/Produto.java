@@ -10,7 +10,7 @@ implements Serializable{
 	serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="id")
 	private Long id;
 	
@@ -18,7 +18,7 @@ implements Serializable{
 	private String nome;
 	
 	@Column (name="valor_unitario")
-	private Double valor_unitario;
+	private Float valor_unitario;
 	
 	@Column (name="prazo")
 	private String prazo;
@@ -39,11 +39,11 @@ implements Serializable{
 		this.nome = nome;
 	}
 
-	public Double getValor_unitario() {
+	public Float getValor_unitario() {
 		return valor_unitario;
 	}
 
-	public void setValor_unitario(Double valor_unitario) {
+	public void setValor_unitario(Float valor_unitario) {
 		this.valor_unitario = valor_unitario;
 	}
 

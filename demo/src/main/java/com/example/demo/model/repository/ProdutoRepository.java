@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.*;
 
 
 
-public interface ProdutoRepository  extends JpaRepository<Produto, Long>{
-	public Produto findByid(Integer id);
-
+public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+	//public Produto findById(int id);
 }
+

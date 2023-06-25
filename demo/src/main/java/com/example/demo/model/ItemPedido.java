@@ -3,8 +3,8 @@ import java.io.Serializable;
 
 
 public class ItemPedido extends ProdutoDTO implements Serializable{
-	private int id;
-	private double valor;
+	private Long id;
+	private Float valor;
 	private int prazo;
 	private String nome;
 	private int quantidade;
@@ -13,7 +13,7 @@ public class ItemPedido extends ProdutoDTO implements Serializable{
 		super();
 	} 
 
-	public ItemPedido(int id, String nome, double valor, int prazo, int quantidade) {
+	public ItemPedido(Long id, String nome, Float valor, int prazo, int quantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -22,19 +22,19 @@ public class ItemPedido extends ProdutoDTO implements Serializable{
 		this.quantidade = quantidade;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public double getValor() {
+	public Float getValor() {
 		return valor;
 	}
 
-	public void setValor(double valor) {
+	public void setValor(Float valor) {
 		this.valor = valor;
 	}
 
