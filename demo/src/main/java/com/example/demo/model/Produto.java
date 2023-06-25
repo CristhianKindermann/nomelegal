@@ -1,57 +1,58 @@
 package com.example.demo.model;
 import java.io.Serializable;
+import jakarta.persistence.*;
 
-public class Produto implements Serializable {
+@Entity
+@Table(name="produto")
+public class Produto 	
+implements Serializable{
+	private static final Long
+	serialVersionUID = 1L;
 	
-	private int id;
+	@Id
+	@GeneratedValue
+	@Column (name="id")
+	private Long id;
+	
+	@Column (name="nome")
 	private String nome;
-	private int prazo;
-	private double valor;
 	
-	public Produto() {
-		super();
-	}
+	@Column (name="valor_unitario")
+	private Double valor_unitario;
 	
-	public Produto(int id, String nome,double valor, int prazo ) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.prazo = prazo;
-		this.valor = valor;
-	}
-	
-	public int getId() {
+	@Column (name="prazo")
+	private String prazo;
+
+	public Long getId() {
 		return id;
 	}
-	
-	public void setId(int id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public int getPrazo() {
+
+	public Double getValor_unitario() {
+		return valor_unitario;
+	}
+
+	public void setValor_unitario(Double valor_unitario) {
+		this.valor_unitario = valor_unitario;
+	}
+
+	public String getPrazo() {
 		return prazo;
 	}
-	
-	public void setPrazo(int prazo) {
+
+	public void setPrazo(String prazo) {
 		this.prazo = prazo;
 	}
-	
-	public double getValor() {
-		return valor;
-	}
-	
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
-	
-	
 
 }

@@ -2,7 +2,7 @@ package com.example.demo.model;
 import java.io.Serializable;
 
 
-public class ItemPedido extends Produto implements Serializable{
+public class ItemPedido extends ProdutoDTO implements Serializable{
 	private int id;
 	private double valor;
 	private int prazo;
