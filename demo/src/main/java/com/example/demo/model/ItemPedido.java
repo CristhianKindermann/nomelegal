@@ -1,24 +1,49 @@
 package com.example.demo.model;
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-public class ItemPedido extends ProdutoDTO implements Serializable{
+@Entity
+@Table(name = "tem")
+public class ItemPedido implements Serializable{
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private Float valor;
-	private int prazo;
+	
+	//private int prazo;
+	
+	@Column (name="nome")
 	private String nome;
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_pedido_id")
+    private Pedido pedido;
+	
+	@ManyToOne
+    @JoinColumn(name = "fk_produto_id")
+    private Produto produto;
+	
+	@Column(name="quantidade")
 	private int quantidade;
 	
 	public ItemPedido() {
 		super();
 	} 
 
-	public ItemPedido(Long id, String nome, Float valor, int prazo, int quantidade) {
+	public ItemPedido(Long id, String nome, Float valor, int quantidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.valor = valor;
-		this.prazo = prazo;
 		this.quantidade = quantidade;
 	}
 
@@ -36,14 +61,6 @@ public class ItemPedido extends ProdutoDTO implements Serializable{
 
 	public void setValor(Float valor) {
 		this.valor = valor;
-	}
-
-	public int getPrazo() {
-		return prazo;
-	}
-
-	public void setPrazo(int prazo) {
-		this.prazo = prazo;
 	}
 
 	public String getNome() {
