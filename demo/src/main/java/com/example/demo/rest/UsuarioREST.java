@@ -1,5 +1,6 @@
 package com.example.demo.rest;
 import java.util.ArrayList;
+
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.*;
 import com.example.demo.model.repository.*;
 import org.springframework.stereotype.*;
+import java.time.LocalDate;
 
 @CrossOrigin
 @RestController
@@ -37,7 +39,13 @@ public class UsuarioREST {
 	}
 	
 	@PostMapping("/usuarios")
-	UsuarioDTO inserirUsuario(@RequestBody UsuarioDTO usuario) {
+	UsuarioDTO Usuario(@RequestBody UsuarioDTO usuario) {
+		Usuario usu = mapper.map(usuario, Usuario.class);
+		repo.save(usu);
+		Usuario u = repo.findById(usu.getId()).get();
+		return mapper.map(u, UsuarioDTO.class);
+	}
+	
 /*		UsuarioDTO u  = lista.stream().max(Comparator.comparing(UsuarioDTO::getId)).orElse(null);
 		if(u == null) {
 			usuario.setId(1);
@@ -48,11 +56,7 @@ public class UsuarioREST {
 		lista.add(usuario);
 		return usuario;
 	} */
-		repo.save(mapper.map(usuario, Usuario.class));
-		Usuario usu = repo.findByEmail(
-				usuario.getEmail());
-		return mapper.map(usu,  UsuarioDTO.class);
-	}
+
 	
 	@PutMapping("/usuarios/{id}")
 	UsuarioDTO atualizarUsuario(@PathVariable("id") int id, @RequestBody UsuarioDTO usuario) {
@@ -78,7 +82,7 @@ public class UsuarioREST {
 	}
 	
 	static {
-		lista.add(new UsuarioDTO(1, "administr", "admin@admin.com", "1234", "Funcionario"));
-		lista.add(new UsuarioDTO(2, "cliente", "cliente@cliente.com", "1234", "Cliente"));
+		lista.add(new UsuarioDTO(1L, "administrador", "109.555.231-00", "admin@admin.com", "1234", "999999999", "01234-567", "Rua Exemplo", "123", "Cidade Exemplo", "UF", "Bairro Exemplo", "Complemento Exemplo", "Funcionario", LocalDate.of(1990, 1, 1)));
+		lista.add(new UsuarioDTO(2L, "cliente","109.233.232-55", "cliente@cliente.com", "1234","41999335588", "1349260", "ruaze", "12", "colombo", "pr", "zumbi", "fundos", "Cliente",LocalDate.of(1990, 1, 1)));
 	}
 } 

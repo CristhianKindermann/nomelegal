@@ -1,5 +1,7 @@
 package com.example.demo.model;
 import java.io.Serializable;
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +12,7 @@ public class Usuario
 		private static final Long
 		serialVersionUID = 1L;
 	@Id
-	@GeneratedValue
+	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	@Column (name="id")
 	private Long id;
 		
@@ -54,7 +56,7 @@ public class Usuario
 	private String tipo;
 	
 	@Column (name="data_nascimento")
-	private String data_nascimento;
+	private LocalDate data_nascimento;
 
 	public Long getId() {
 		return id;
@@ -168,12 +170,18 @@ public class Usuario
 		this.tipo = tipo;
 	}
 
-	public String getData_nascimento() {
+	public LocalDate getData_nascimento() {
 		return data_nascimento;
 	}
 
-	public void setData_nascimento(String data_nascimento) {
+	public void setData_nascimento(LocalDate data_nascimento) {
 		this.data_nascimento = data_nascimento;
 	}
+
+	public static Long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
 	}
 
