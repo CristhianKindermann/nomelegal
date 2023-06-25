@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.*;
 import org.modelmapper.ModelMapper;
@@ -55,7 +56,7 @@ public class ProdutoREST {
 	}
 
 	@PutMapping("/produtos/{id}")
-	public ResponseEntity<String> alterarProduto(@PathVariable("id") Long id, @RequestBody ProdutoDTO produtoDTO) {
+	public ProdutoDTO alterarProduto(@PathVariable("id") Long id, @RequestBody ProdutoDTO produtoDTO) {
 		Optional<Produto> optionalProduto = repu.findById(id);
 
         if (optionalProduto.isPresent()) {
@@ -66,33 +67,30 @@ public class ProdutoREST {
             produto.setValor_unitario(produtoDTO.getValor_unitario());
             
             repu.save(produto);
-            return ResponseEntity.ok("Produto atualizado com sucesso.");
+            return mapper.map(produto, ProdutoDTO.class);
         }else{
-        	return ResponseEntity.notFound().build();
+        	return null;
+
         }
         
 	}
 	
 	@DeleteMapping("/produtos/{id}")
-	public ResponseEntity<String> removerPorduto(@PathVariable("id") Long id) {
+	@ResponseBody
+	public ProdutoDTO removerPorduto(@PathVariable("id") Long id) {
 		Optional<Produto> optionalProduto = repu.findById(id);
 		if (optionalProduto.isPresent()) {
             Produto produto = optionalProduto.get();
             
             repu.delete(produto);
+            return mapper.map(produto, ProdutoDTO.class);
             
-            return ResponseEntity.ok("Produto excluído com sucesso.");
         } else {
-            return ResponseEntity.notFound().build();
+        	return null;
+
         }
 
 	}
 	
-	
-	
-	
-	static {
 
-	
-	}
 } 
